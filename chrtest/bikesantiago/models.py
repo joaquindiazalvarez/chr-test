@@ -6,6 +6,7 @@ class Network(models.Model):
     name = models.CharField(max_length=80)
     company = models.CharField(max_length=80)
     href = models.CharField(max_length=120)
+    gbfs_href = models.CharField(max_length=120)
     location_city = models.CharField(max_length=80)
     location_country = models.CharField(max_length=80)
     location_latitude = models.IntegerField()
@@ -19,4 +20,4 @@ class Station(models.Model):
     latitude = models.IntegerField()
     free_bikes = models.IntegerField()
     empty_slots = models.IntegerField()
-    author = models.ForeignKey(Network, on_delete=models.CASCADE)
+    network = models.ForeignKey(Network, on_delete=models.CASCADE)
