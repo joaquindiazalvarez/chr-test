@@ -1,0 +1,27 @@
+version: "3.9"
+services: 
+  miapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/home/project
+    depends_on:
+      wait-for-db:
+        condition: service_completed_successfully
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: chr_test_db
+    ports:
+      - "5432:5432"
+  wait-for-db:
+    image: atkrad/wait4x
+    depends_on:
+      - postgres
+    command: tcp postgres:5432 -t 30s -i 250ms

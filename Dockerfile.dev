@@ -1,0 +1,17 @@
+FROM python:3.10.6-bullseye
+
+EXPOSE 8000
+
+RUN mkdir -p /home/project
+
+WORKDIR /home/project
+
+COPY . .
+
+RUN pip3 install pipenv
+
+RUN pipenv install --deploy --system
+
+ENTRYPOINT ["python3"] 
+
+CMD ["chrtest/manage.py", "runserver", "0.0.0.0:8000"]
