@@ -2,6 +2,9 @@ from django.db import models
 
 # Create your models here.
 class Project(models.Model):
+    """
+    Model for retrieve data from SEA page's tables
+    """
     name = models.CharField(max_length=300)
     type = models.CharField(max_length=200)
     region = models.CharField(max_length=200)

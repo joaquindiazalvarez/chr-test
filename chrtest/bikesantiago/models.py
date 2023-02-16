@@ -1,7 +1,9 @@
 from django.db import models
-
 # Create your models here.
 class Network(models.Model):
+    """
+    Model for retrieve data from the network itself inside the bikesantiago API response
+    """
     network_id = models.CharField(max_length=80)
     name = models.CharField(max_length=80)
     company = models.CharField(max_length=80)
@@ -13,6 +15,9 @@ class Network(models.Model):
     location_longitude = models.IntegerField()
 
 class Station(models.Model):
+    """
+    Model for retrieve stations data from the network inside the bikesantiago API response
+    """
     station_id = models.CharField(max_length=120)
     name = models.CharField(max_length=120)
     timestamp = models.CharField(max_length=120)
