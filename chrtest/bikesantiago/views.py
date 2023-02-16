@@ -26,15 +26,15 @@ def retrieve(request):
 
         stations = data['stations']
 
-        for i in range(len(stations)):
+        for station in stations:
             new_station = Station()
-            new_station.station_id = stations[i]['id']
-            new_station.name = stations[i]['name']
-            new_station.timestamp = stations[i]['timestamp']
-            new_station.longitude = stations[i]['longitude']
-            new_station.latitude = stations[i]['latitude']
-            new_station.free_bikes = stations[i]['free_bikes']
-            new_station.empty_slots = stations[i]['empty_slots']
+            new_station.station_id = station['id']
+            new_station.name = station['name']
+            new_station.timestamp = station['timestamp']
+            new_station.longitude = station['longitude']
+            new_station.latitude = station['latitude']
+            new_station.free_bikes = station['free_bikes']
+            new_station.empty_slots = station['empty_slots']
             new_station.network = network
             new_station.save()
     return HttpResponse("Ok")
