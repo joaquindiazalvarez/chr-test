@@ -1,11 +1,13 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import JsonResponse
 from .models import Project
 from bs4 import BeautifulSoup
 import requests
 # Create your views here.
 def retrieve(request):
     page = 1
+    row_array = []
     while True:
         url = f"https://seia.sea.gob.cl/busqueda/buscarProyectoAction.php?_paginador_fila_actual={page}"
 
@@ -18,20 +20,21 @@ def retrieve(request):
             break
         rows = table.find_all("tr")
 
-        row_array = []
-
         for row in rows:
             cells = row.find_all("td")
             cell_array = []
             for cell in cells:
                 data = cell.text.strip()
-                cell_array.append(data)
-            
-            row_array.append(cell_array)
+                if data != "":
+                    cell_array.append(data)
+            if len(cell_array) > 0: 
+                row_array.append(cell_array)
 
-        row_array = row_array[2:]
+        page += 1
+    result = {"result": row_array}
+    return JsonResponse(result)
 
-        for row in row_array:
+"""        for row in row_array:
             new_project = Project()
             new_project.name = row[1]
             new_project.type = row[2]
@@ -42,5 +45,5 @@ def retrieve(request):
             new_project.date = row[7]
             new_project.state = row[8]
             new_project.save()
-        page += 1
-    return HttpResponse("Ok")
+
+"""
